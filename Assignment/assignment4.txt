@@ -1,0 +1,98 @@
+import pandas as pd
+import numpy as np
+from matplotlib import pyplot as plt
+import seaborn as sns
+from sklearn.linear_model import LinearRegression
+df=pd.read_csv("/abalone.csv")
+df['age'] = df['Rings']+1.5
+df = df.drop('Rings', axis = 1)
+df.hist(figsize=(20,10), grid=False, layout=(2, 4), bins = 30)
+df.groupby('Sex')[['Length', 'Diameter', 'Height', 'Whole weight', 'Shucked weight',
+       'Viscera weight', 'Shell weight', 'age']].mean().sort_values('age')
+numerical_features = df.select_dtypes(include = [np.number]).columns
+sns.pairplot(df[numerical_features])
+df.describe()
+df.isnull().sum()
+df = pd.get_dummies(df)
+dummy_data = df.copy()
+var = 'Viscera weight'
+plt.scatter(x = df[var], y = df['age'],)
+plt.grid(True)
+# outliers removal
+df.drop(df[(df['Viscera weight']> 0.5) & (df['age'] < 20)].index, inplace=True)
+df.drop(df[(df['Viscera weight']<0.5) & (df['age'] > 25)].index, inplace=True)
+var = 'Shell weight'
+plt.scatter(x = df[var], y = df['age'],)
+plt.grid(True)
+#Outliers removal
+df.drop(df[(df['Shell weight']> 0.6) & (df['age'] < 25)].index, inplace=True)
+df.drop(df[(df['Shell weight']<0.8) & (df['age'] > 25)].index, inplace=True)
+var = 'Shucked weight'
+plt.scatter(x = df[var], y = df['age'],)
+plt.grid(True)
+
+#Outlier removal
+df.drop(df[(df['Shucked weight']>= 1) & (df['age'] < 20)].index, inplace=True)
+df.drop(df[(df['Shucked weight']<1) & (df['age'] > 20)].index, inplace=True)
+var = 'Whole weight'
+plt.scatter(x = df[var], y = df['age'])
+plt.grid(True)
+
+df.drop(df[(df['Whole weight'] >= 2.5) &
+          (df['age'] < 25)].index, inplace = True)
+df.drop(df[(df['Whole weight']<2.5) & (
+df['age'] > 25)].index, inplace = True)
+var = 'Diameter'
+plt.scatter(x = df[var], y = df['age'])
+plt.grid(True)
+
+df.drop(df[(df['Diameter'] <0.1) &
+          (df['age'] < 5)].index, inplace = True)
+df.drop(df[(df['Diameter']<0.6) & (
+df['age'] > 25)].index, inplace = True)
+df.drop(df[(df['Diameter']>=0.6) & (
+df['age'] < 25)].index, inplace = True)
+
+var = 'Height'
+plt.scatter(x = df[var], y = df['age'])
+plt.grid(True)
+df.drop(df[(df['Height'] > 0.4) &
+          (df['age'] < 15)].index, inplace = True)
+df.drop(df[(df['Height']<0.4) & (
+df['age'] > 25)].index, inplace = True)
+
+var = 'Length'
+plt.scatter(x = df[var], y = df['age'])
+plt.grid(True)
+
+df.drop(df[(df['Length'] <0.1) &
+          (df['age'] < 5)].index, inplace = True)
+df.drop(df[(df['Length']<0.8) & (
+df['age'] > 25)].index, inplace = True)
+df.drop(df[(df['Length']>=0.8) & (
+df['age'] < 25)].index, inplace = True)
+numerical_features = df.select_dtypes(include = [np.number]).columns
+categorical_features = df.select_dtypes(include = [np.object]).columns
+numerical_features
+categorical_features
+from sklearn.preprocessing import LabelEncoder
+le=LabelEncoder()
+print(df.Length.value_counts())
+x=df.iloc[:,:5]
+x
+y=df.iloc[:,5:]
+y
+from sklearn.model_selection import train_test_split
+x_train,x_test,y_train,y_test=train_test_split(x,y,test_size=0.2)
+from sklearn.linear_model import LinearRegression
+mlr=LinearRegression()
+mlr.fit(x_train,y_train)
+x_test[0:5]
+y_test[0:5]
+from sklearn.preprocessing import StandardScaler
+ss=StandardScaler()
+x_train=ss.fit_transform(x_train)
+mlrpred=mlr.predict(x_test[0:9])
+mlrpred
+from sklearn.metrics import r2_score
+r2_score(mlr.predict(x_test),y_test)

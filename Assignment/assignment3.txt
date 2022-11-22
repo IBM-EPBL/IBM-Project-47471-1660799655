@@ -1,0 +1,83 @@
+from google.colab import drive
+drive.mount('/content/drive')
+a=4
+b=7
+c=b**a
+print(c)
+s="Hi there sam!"
+n=s.split(" ")
+print(n)
+s="Hi there dad!"
+n=s.split(" ")
+print(n)
+v="the diameter of {planet} is {diameter} kilometers."
+k=v.format(planet="Earth",diameter=12742)
+print(k)
+lst = [1,2,[3,4],[5,[100,200,['hello']],23,11],1,7]
+lst=[1,2,[3,4],[5,[100,200,['hello']],23,11],1,7]
+print(lst[3][1][2][0])
+d = {'k1':[1,2,3,{'tricky':['oh','man','inception',{'target':[1,2,3,'hello']}]}]}
+d = {'k1':[1,2,3,{'tricky':['oh','man','inception',{'target':[1,2,3,'hello']}]}]}
+print(d['k1'][3]["tricky"][3]['target'][3])
+# Tuple is immutable
+#Tuples operations are safe.
+#Tuples consumes less memory
+def findDog(st):
+    if 'dog' in st.lower():
+        print("True")
+    else:
+        print("False")
+
+st = "Is there a dog here?"
+findDog(st)
+def dog_count(sentence):
+    words = sentence.split('')
+    k=0
+    for i in range(len(words)):
+        words[i]=words[i].lower()
+    for i in words:
+      if(i=='dog'):
+         k+=1
+      return k
+value = 'This dog runs faster than the other dog dude!';
+
+def countdogs(value):
+    count = 2
+    for word in value.lower().split():
+        if word == 'dog' or word == 'dogs':
+            
+            print(count)
+
+countdogs(value)
+def caught_speeding(speed, is_birthday):
+    
+    if is_birthday:
+        speeding = speed - 5
+    else:
+        speeding = speed
+    
+    if speeding > 80:
+        return 'Big Ticket'
+    elif speeding > 60:
+        return 'Small Ticket'
+    else:
+        return 'No Ticket'
+print(caught_speeding(90, False))
+print(caught_speeding(81, True))
+emp_sal=[50000,45000,70000,25000,35000]
+total_salary_expenditure=0
+for i in emp_sal:
+  total_salary_expenditure +=i
+print('total salary expenditure is',total_salary_expenditure)
+def Merge(dict1, dict2):
+	return(dict2.update(dict1))
+
+
+
+dict1 = {'empid': 13, 'empname':'john wick','basicpay': 70000}
+dict2 = {'deptname': 'analytics', 'deptid': 7}
+
+print( Merge(dict1, dict2))
+
+
+print(dict2)
